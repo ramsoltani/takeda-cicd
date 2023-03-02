@@ -7,17 +7,17 @@ This repository contains two files: inventory.j2 and hosts-dev.yml, along with a
 
 The following variables are defined in the file:
 
-ansible_connection: The connection method for Ansible, set to SSH
-ansible_user: The username to use for SSH connection, populated with the value of cluster_data.ssh_username
-ansible_become: Whether to become a privileged user after connecting via SSH, set to true
-ansible_ssh_private_key_file: The path to the SSH private key to use for authentication, populated with the value of cluster_data.ssh_key
-ccloud_kafka_enabled: A flag to indicate whether to enable the use of Confluent Cloud Kafka broker
-ccloud_kafka_bootstrap_servers: The bootstrap server for Confluent Cloud Kafka broker
-ccloud_kafka_key: The API key for Confluent Cloud Kafka broker authentication
-ccloud_kafka_secret: The API secret for Confluent Cloud Kafka broker authentication
-ccloud_schema_registry_enabled: A flag to indicate whether to enable the use of Confluent Cloud Schema Registry
-ccloud_schema_registry_url: The URL of Confluent Cloud Schema Registry
-ccloud_schema_registry_key: The API key for Confluent Cloud Schema Registry authentication
+*ansible_connection*: The connection method for Ansible, set to SSH
+*ansible_user*: The username to use for SSH connection, populated with the value of cluster_data.ssh_username
+*ansible_become*: Whether to become a privileged user after connecting via SSH, set to true
+*ansible_ssh_private_key_file*: The path to the SSH private key to use for authentication, populated with the value of cluster_data.ssh_key
+*ccloud_kafka_enabled*: A flag to indicate whether to enable the use of Confluent Cloud Kafka broker
+*ccloud_kafka_bootstrap_servers*: The bootstrap server for Confluent Cloud Kafka broker
+*ccloud_kafka_key*: The API key for Confluent Cloud Kafka broker authentication
+*ccloud_kafka_secret*: The API secret for Confluent Cloud Kafka broker authentication
+*ccloud_schema_registry_enabled*: A flag to indicate whether to enable the use of Confluent Cloud Schema Registry
+*ccloud_schema_registry_url*: The URL of Confluent Cloud Schema Registry
+*ccloud_schema_registry_key*: The API key for Confluent Cloud Schema Registry authentication
 ccloud_schema_registry_secret: The API secret for Confluent Cloud Schema Registry authentication
 kafka_connect_cluster_name: The name of the Kafka Connect cluster to which the connector belongs
 kafka_connect_custom_java_args: Custom Java arguments to pass to the Kafka Connect worker process, commented out by default
