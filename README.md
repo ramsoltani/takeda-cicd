@@ -1,9 +1,11 @@
 # takeda-cicd
 
 This repository contains two files: inventory.j2 and hosts-dev.yml, along with a Python script generate_hosts.py for generating the Ansible hosts file.
+**inventory.j2** is an Ansible template file used for provisioning a Confluent component connector with Ansible. The file contains configurations for connection with Confluent Cloud Kafka broker and Confluent Cloud Schema Registry, and the plugins to add to the connector.
+**hosts-dev.yml** is a YAML file that defines the list of hosts and their parameters to populate the Ansible hosts file.
+**generate_hosts.py** is a Python script for generating the Ansible hosts file using the data from hosts-dev.yml and inventory.j2.
 
 # inventory.j2
-**inventory.j2** is an Ansible template file used for provisioning a Confluent component connector with Ansible. The file contains configurations for connection with Confluent Cloud Kafka broker and Confluent Cloud Schema Registry, and the plugins to add to the connector.
 
 The following variables are defined in the file:
 
@@ -22,8 +24,9 @@ ccloud_schema_registry_secret: The API secret for Confluent Cloud Schema Registr
 kafka_connect_cluster_name: The name of the Kafka Connect cluster to which the connector belongs
 kafka_connect_custom_java_args: Custom Java arguments to pass to the Kafka Connect worker process, commented out by default
 kafka_connect_confluent_hub_plugins: A list of Confluent Hub plugins to add to the Kafka Connect worker process
+
 # hosts-dev.yml
-hosts-dev.yml is a YAML file that defines the list of hosts and their parameters to populate the Ansible hosts file. The file contains the following variables:
+The file contains the following variables:
 
 cluster_data: A dictionary containing the SSH username and private key path for connecting to the hosts
 ccloud_kafka_bootstrap_servers: The bootstrap server for Confluent Cloud Kafka broker
@@ -33,7 +36,7 @@ kafka_connect_cluster_name: The name of the Kafka Connect cluster to which the c
 kafka_connect: A dictionary containing the IP addresses or hostnames of the Kafka Connect nodes and their corresponding public IP addresses
 kafka_connect_confluent_hub_plugins: A list of Confluent Hub plugins to add to the Kafka Connect worker process
 # generate_hosts.py
-generate_hosts.py is a Python script for generating the Ansible hosts file using the data from hosts-dev.yml and inventory.j2. The script takes in three arguments:
+The script takes in three arguments:
 
 -i/--inventory: The path to the hosts-dev.yml file
 -t/--template: The path to the inventory.j2 template file
