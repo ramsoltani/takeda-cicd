@@ -5,6 +5,7 @@ This repository contains two files: inventory.j2 and hosts-dev.yml, along with a
 
 # inventory.j2
 > **inventory.j2** is an Ansible template file used for provisioning a Confluent component connector with Ansible. The file contains configurations for connection with Confluent Cloud Kafka broker and Confluent Cloud Schema Registry, and the plugins to add to the connector.
+
 The following variables are defined in the file:
 
 *ansible_connection*: The connection method for Ansible, set to SSH
@@ -25,6 +26,7 @@ kafka_connect_confluent_hub_plugins: A list of Confluent Hub plugins to add to t
 
 # hosts-dev.yml
 > **hosts-dev.yml** is a YAML file that defines the list of hosts and their parameters to populate the Ansible hosts file.
+
 The file contains the following variables:
 
 cluster_data: A dictionary containing the SSH username and private key path for connecting to the hosts
@@ -37,9 +39,16 @@ kafka_connect_confluent_hub_plugins: A list of Confluent Hub plugins to add to t
 
 # generate_hosts.py
 > **generate_hosts.py** is a Python script for generating the Ansible hosts file using the data from hosts-dev.yml and inventory.j2.
+
 The script takes in three arguments:
 
 -i/--inventory: The path to the hosts-dev.yml file
+
+
 -t/--template: The path to the inventory.j2 template file
+
+
 -o/--output: The path to the output Ansible hosts file
+
+
 The script loads the data from hosts-dev.yml, loads the inventory.j2 template, renders the template
