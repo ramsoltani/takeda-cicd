@@ -2,9 +2,9 @@ cluster_data:
   ssh_username: ubuntu
   ssh_key: /Users/rsoltani/Downloads/keys/ramzi-ec2.pem
 
-ccloud_kafka_bootstrap_servers: pkc-pgq85.us-west-2.aws.confluent.cloud:9092
-ccloud_kafka_key: 3QBDQ3BR76STWUHM
-ccloud_kafka_secret: alkMxUXcKnSBUhejf7/FYIS9JUZcC6+Z9ClU4o7BtAx+1SXKRzrx7vbPzk0NiKJW
+ccloud_kafka_bootstrap_servers: pkc-xxx.us-west-2.aws.confluent.cloud:9092
+ccloud_kafka_key: AAAAAAAAAAAAAAAA
+ccloud_kafka_secret: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
 #ccloud_schema_registry_url: https://psrc-zzzzz.europe-west3.gcp.confluent.cloud
 #ccloud_schema_registry_key: AAAAAAAAAAAAAAAA
