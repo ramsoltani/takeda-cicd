@@ -3,7 +3,7 @@
 This repository contains two files: inventory.j2 and hosts-dev.yml, along with a Python script generate_hosts.py for generating the Ansible hosts file.
 
 # inventory.j2
-inventory.j2 is an Ansible template file used for provisioning a Confluent component connector with Ansible. The file contains configurations for connection with Confluent Cloud Kafka broker and Confluent Cloud Schema Registry, and the plugins to add to the connector.
+**inventory.j2** is an Ansible template file used for provisioning a Confluent component connector with Ansible. The file contains configurations for connection with Confluent Cloud Kafka broker and Confluent Cloud Schema Registry, and the plugins to add to the connector.
 
 The following variables are defined in the file:
 
