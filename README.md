@@ -1,4 +1,4 @@
-# takeda-cicd
+# Takeda-CICD
 
 This repository contains two files: inventory.j2 and hosts-dev.yml, along with a Python script generate_hosts.py for generating the Ansible hosts file.
 
