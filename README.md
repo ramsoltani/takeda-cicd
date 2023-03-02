@@ -1,6 +1,6 @@
 # Takeda-CICD
 
-This repository contains two files: inventory.j2 and hosts-dev.yml, along with a Python script generate_hosts.py for generating the Ansible hosts file.
+This repository contains the necessary files to provision a Confluent component connector with Ansible, and to generate a hosts file used by Ansible for the deployment.
 
 
 # inventory.j2
@@ -52,3 +52,15 @@ The script takes in three arguments:
 
 
 The script loads the data from hosts-dev.yml, loads the inventory.j2 template, renders the template
+
+# Usage
+
+To generate the hosts file, use the following command:
+
+> python generate_hosts.py -i hosts-dev.yml -t inventory.j2 -o hosts.yml
+
+To install a Confluent Connector with the generated hosts file, use this command:
+
+> ansible-playbook -i hosts.yml confluent.platform.all --tags=kafka_connect
+
+
