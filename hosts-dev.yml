@@ -1,0 +1,23 @@
+cluster_data:
+  ssh_username: ubuntu
+  ssh_key: /Users/rsoltani/Downloads/keys/ramzi-ec2.pem
+
+ccloud_kafka_bootstrap_servers: pkc-pgq85.us-west-2.aws.confluent.cloud:9092
+ccloud_kafka_key: 3QBDQ3BR76STWUHM
+ccloud_kafka_secret: alkMxUXcKnSBUhejf7/FYIS9JUZcC6+Z9ClU4o7BtAx+1SXKRzrx7vbPzk0NiKJW
+
+#ccloud_schema_registry_url: https://psrc-zzzzz.europe-west3.gcp.confluent.cloud
+#ccloud_schema_registry_key: AAAAAAAAAAAAAAAA
+#ccloud_schema_registry_secret: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+kafka_connect_cluster_name: takeda-connect
+
+kafka_connect:
+  ip-172-30-47-87.us-west-2.compute.internal: ec2-35-90-95-206.us-west-2.compute.amazonaws.com
+  ip-172-30-33-233.us-west-2.compute.internal: ec2-34-220-89-194.us-west-2.compute.amazonaws.com
+
+kafka_connect_confluent_hub_plugins:
+  - confluentinc/kafka-connect-datagen:0.5.3
+
+#control_center:
+  #ip-172-30-39-86.us-west-2.compute.internal: ec2-35-87-239-233.us-west-2.compute.amazonaws.com
