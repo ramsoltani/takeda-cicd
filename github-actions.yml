@@ -1,4 +1,4 @@
-name: Deploy Confluent Connector
+name: Deploy Connect Cluster
 
 on:
   push:
@@ -7,31 +7,38 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10.4'
 
     - name: Install Ansible
       run: |
         sudo apt update
         sudo apt install -y ansible
+        ansible-galaxy collection install git+https://github.com/confluentinc/cp-ansible.git,7.3.2-post
 
-    - name: Generate Hosts File
-      run: |
-        python generate_hosts.py -i ${{{ matrix.hosts }}.yml} -t inventory.j2 -o hosts.yml
+    - name: Set up environment variables
       env:
-        MATRIX_HOSTS: ${{ matrix.hosts }}
+        ANSIBLE_HASH_BEHAVIOUR: merge
+        CCLOUD_KEY: ${{ secrets.CCLOUD_KAFKA_KEY }}
+        CCLOUD_SECRET: ${{ secrets.CCLOUD_KAFKA_SECRET }}
 
-      # Add the following lines to your `secrets` repository settings to define the available options for the hosts file
-      # The values should be a comma-separated list of available hosts files
-      # - Name: MATRIX_HOSTS
-      #   Value: hosts-dev,hosts-test,hosts-prod
+    - name: Install jinja2 and libyaml
+      run: |
+        pip install jinja2==3.1.2 PyYAML
 
-    - name: Deploy Confluent Connector
+    - name: Generate hosts file
+      env:
+        HOSTS_DEV_FILE: "hosts-dev.yml" # Modify this line to select the desired file
+      run: |
+        python generate_hosts.py -i ${{ env.HOSTS_DEV_FILE }} -t inventory.j2 -o hosts.yml
+
+    - name: Deploy Connect cluster
       run: |
         ansible-playbook -i hosts.yml confluent.platform.all --tags=kafka_connect
-      env:
-        CLOUD_KEY: ${{ secrets.ccloud_kafka_key }}
-        CLOUD_SECRET: ${{ secrets.ccloud_kafka_secret }}
-
 
