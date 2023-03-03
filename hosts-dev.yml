@@ -17,7 +17,7 @@ kafka_connect:
   ip-172-30-33-233.us-west-2.compute.internal: ec2-34-220-89-194.us-west-2.compute.amazonaws.com
 
 kafka_connect_confluent_hub_plugins:
-  - confluentinc/kafka-connect-datagen:0.5.3
+  - confluentinc/kafka-connect-jdbc:10.6.4
 
 #control_center:
   #ip-172-30-39-86.us-west-2.compute.internal: ec2-35-87-239-233.us-west-2.compute.amazonaws.com
