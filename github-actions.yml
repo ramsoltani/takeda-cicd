@@ -1,0 +1,37 @@
+name: Deploy Confluent Connector
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Ansible
+      run: |
+        sudo apt update
+        sudo apt install -y ansible
+
+    - name: Generate Hosts File
+      run: |
+        python generate_hosts.py -i ${{{ matrix.hosts }}.yml} -t inventory.j2 -o hosts.yml
+      env:
+        MATRIX_HOSTS: ${{ matrix.hosts }}
+
+      # Add the following lines to your `secrets` repository settings to define the available options for the hosts file
+      # The values should be a comma-separated list of available hosts files
+      # - Name: MATRIX_HOSTS
+      #   Value: hosts-dev,hosts-test,hosts-prod
+
+    - name: Deploy Confluent Connector
+      run: |
+        ansible-playbook -i hosts.yml confluent.platform.all --tags=kafka_connect
+      env:
+        CLOUD_KEY: ${{ secrets.ccloud_kafka_key }}
+        CLOUD_SECRET: ${{ secrets.ccloud_kafka_secret }}
+
+
