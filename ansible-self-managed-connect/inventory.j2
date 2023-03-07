@@ -16,7 +16,9 @@ all:
     ccloud_schema_registry_secret: {{ ccloud_schema_registry_secret }}
 
     kafka_connect_cluster_name: {{ kafka_connect_cluster_name }}
-#    kafka_connect_custom_java_args: "-javaagent:/opt/appdynamics/appagent/ver22.4.0.33722/javaagent.jar -Dappdynamics.agent.uniqueHostId=93255-usvgackcd003"
+    kafka_connect_service_overrides:
+      ExecStartPost: /bin/bash -c "sleep 10;jps -lm | awk '/ConnectDistributed/ {print $1}' > /etc/kafka/kafka.pid"
+    kafka_connect_custom_java_args: "-javaagent:/opt/appdynamics/appagent/ver22.4.0.33722/javaagent.jar -Dappdynamics.agent.uniqueHostId=93255-usvgackcd003"
 
 kafka_connect:
   vars:
