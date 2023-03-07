@@ -1,0 +1,37 @@
+name: Apply Confluent ACLs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  apply-confluent-acls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "1.1.4"
+      - name: Generate tfvars file
+        run: python generate_tfvars.py sa-acls.json
+        env:
+          KAFKA_ID: ${{ secrets.KAFKA_ID }}
+          KAFKA_REST_ENDPOINT: ${{ secrets.KAFKA_REST_ENDPOINT }}
+          KAFKA_API_KEY: ${{ secrets.KAFKA_API_KEY }}
+          KAFKA_API_SECRET: ${{ secrets.KAFKA_API_SECRET }}
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          CONFLUENT_CLOUD_API_KEY: ${{ secrets.CONFLUENT_CLOUD_API_KEY }}
+          CONFLUENT_CLOUD_API_SECRET: ${{ secrets.CONFLUENT_CLOUD_API_SECRET }}
+      - name: Terraform Show
+        run: terraform show
