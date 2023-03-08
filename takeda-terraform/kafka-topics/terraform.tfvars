@@ -15,11 +15,11 @@ cluster_takeda_id = "lkc-j37km2"
 
 #data_test_topic = "takeda-test"
 topics = {
-  orders = {
+  takeda-ods = {
     partitions_count = 6
     cleanup_policy   = "compact"
   }
-  payments = {
+  takeda-aws = {
     partitions_count = 6
     cleanup_policy   = "compact"
   }
