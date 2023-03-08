@@ -53,7 +53,6 @@ data "confluent_service_account" "sa_name" {
 #  operation  = each.value.operation
 #  permission = each.value.permission
 #}
-
 locals {
   acls = flatten([
     for account_name, account in var.service_accounts : [
@@ -65,19 +64,20 @@ locals {
   ])
 }
 
+
 resource "confluent_kafka_acl" "takeda-acls" {
   provider = confluent.kafka
-
   for_each = {
-    for pair in setproduct(toset(local.acls), toset(keys(data.confluent_service_account.sa_name))) :
-    "${pair.1}_${pair.0.acl.resource_type}_${pair.0.acl.resource_name}_${pair.0.acl.pattern_type}_${pair.0.acl.operation}" => {
-      resource_type = pair.0.acl.resource_type
-      resource_name = pair.0.acl.resource_name
-      pattern_type  = pair.0.acl.pattern_type
-      principal     = "User:${data.confluent_service_account.sa_name[pair.1].id}"
-      host          = pair.0.acl.host
-      operation     = pair.0.acl.operation
-      permission    = pair.0.acl.permission
+    for pair in local.acls :
+    "${pair.account_name}_${pair.acl.resource_type}_${pair.acl.resource_name}_${pair.acl.pattern_type}_${pair.acl.operation}" => {
+
+      resource_type = pair.acl.resource_type
+      resource_name = pair.acl.resource_name
+      pattern_type  = pair.acl.pattern_type
+      principal     = "User:${data.confluent_service_account.sa_name[pair.account_name].id}"
+      host          = pair.acl.host
+      operation     = pair.acl.operation
+      permission    = pair.acl.permission
     }
   }
 
