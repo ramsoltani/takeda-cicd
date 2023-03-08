@@ -26,3 +26,4 @@ jobs:
         run: terraform apply -auto-approve
       - name: Terraform Show
         run: terraform show
+
