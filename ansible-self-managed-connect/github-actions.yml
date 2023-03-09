@@ -6,26 +6,38 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-        
+    runs-on: [self-hosted,aws-rhel7]
+
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-        
+    - name: Install Python
+      run: |
+          sudo yum install python3
+          sudo yum -y install numpy
+          sudo yum -y install scipy
+          python3 -m pip install --upgrade pip
+    - name: Check Python version
+      run: python3 --version
+
     - name: Install Ansible
-      run: |
-        sudo apt update
-        sudo apt install -y ansible
-        ansible-galaxy collection install git+https://github.com/confluentinc/cp-ansible.git,7.3.2-post
+      run: python3 -m pip install ansible-core==2.11.12
 
-
-    - name: Install jinja2 and libyaml
+    - name: Install Confluent collection
       run: |
-        pip install jinja2==3.1.2 PyYAML
+          ansible-galaxy collection install git+https://github.com/confluentinc/cp-ansible.git,7.3.2-post
+          ansible-galaxy collection install ansible.posix
+
+    - name: Check Ansible version
+      run: ansible --version
+
+    - name: Create SSH directory
+      run: mkdir -p ~/.ssh
+
+    - name: Copy SSH key
+      run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_ansible.pem
+          chmod 600 ~/.ssh/id_rsa_ansible.pem
 
     - name: Generate hosts file
       env:
@@ -35,8 +47,6 @@ jobs:
         CCLOUD_SECRET: ${{ secrets.CCLOUD_KAFKA_SECRET }}
       run: |
         python generate_hosts.py -i ${{ env.HOSTS_DEV_FILE }} -t inventory.j2 -o hosts.yml
-
     - name: Deploy Connect cluster
       run: |
         ansible-playbook -i hosts.yml confluent.platform.all --tags=kafka_connect
-

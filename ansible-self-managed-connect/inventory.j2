@@ -29,7 +29,6 @@ kafka_connect:
   hosts:
     {% for host in kafka_connect %}
     {{ host }}:
-      ansible_host: {{ kafka_connect[host] }}
     {% endfor %}
 
 #  control_center:
