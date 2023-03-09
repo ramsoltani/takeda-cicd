@@ -1,4 +1,4 @@
-name: Terraform Create Topics
+name: Terraform Create Service Account
 
 on:
   push:
@@ -14,7 +14,16 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
       - name: Terraform Init
-        run: terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: <your-S3-bucket-region>
+        working-directory: takeda-terraform/kafka-sa
+        run: |
+          terraform init \
+            -backend-config="bucket=<your-S3-bucket-name>" \
+            -backend-config="key=<your-S3-bucket-key>" \
+            -backend-config="region=<your-S3-bucket-region>"
       - name: Terraform Apply
         env:
           CONFLUENT_CLOUD_API_KEY: ${{ secrets.CONFLUENT_CLOUD_API_KEY }}
@@ -23,7 +32,8 @@ jobs:
           KAFKA_REST_ENDPOINT: ${{ secrets.KAFKA_REST_ENDPOINT }}
           KAFKA_API_KEY: ${{ secrets.KAFKA_API_KEY }}
           KAFKA_API_SECRET: ${{ secrets.KAFKA_API_SECRET }}
+        working-directory: takeda-terraform/kafka-sa
         run: terraform apply -auto-approve
       - name: Terraform Show
+        working-directory: takeda-terraform/kafka-sa
         run: terraform show
-
