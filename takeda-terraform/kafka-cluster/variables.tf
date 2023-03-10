@@ -14,6 +14,11 @@ variable "aws_account_id" {
   type        = string
 }
 
+variable "private_link_network" {
+  description = "The Private Link ID"
+  type        = string
+}
+
 variable "region" {
   description = "The AWS Region of the existing VPC"
   type        = string
