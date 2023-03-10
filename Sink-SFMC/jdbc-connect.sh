@@ -31,4 +31,4 @@
   "transforms.ReplaceField.blacklist": "lastmodified"
   "poll.interval.ms":10000,
   "tasks.max": "1"
-   }
+}'
