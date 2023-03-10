@@ -4,6 +4,7 @@ confluent_cloud_api_key    = "AAAAAAAAAAAAAAAAA"
 confluent_cloud_api_secret = "AAAAAAAAAAAAAAAAABBBBBBBBBBBB"
 
 
+private_link_network = "id-network"
 # The AWS account ID to enable for the Private Link Access.
 # You can find your AWS account ID here (https://console.aws.amazon.com/billing/home?#/account) under My Account section of the AWS Management Console. Must be a 12 character string.
 aws_account_id = "492737776546"
